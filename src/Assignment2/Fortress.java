@@ -4,6 +4,7 @@ package Assignment2;
  * Created by constantin on 18/06/16.
  */
 public class Fortress {
+    //Some comment for the fortress
     public static final int DEFAULT_HEALTH = 1500;
     private int health;
 
