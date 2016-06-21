@@ -14,9 +14,9 @@ public class Coordinate {
         this.col = (int) point.charAt(1) - FIRST_NUMBER;
     }
 
-    public Coordinate(char row , int col){
-        this.row = row - FIRST_LETTER;
-        this.col = col - 1;
+    public Coordinate(int row , int col){
+        this.row = row;
+        this.col = col;
     }
 
     public int getCol(){
