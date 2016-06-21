@@ -19,7 +19,13 @@ public class TankManager {
 
     public TankManager(int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
         map = new Map(dimensionRow, dimensionCol);
+        tetromino = new ArrayList<>();
         generateTetrominos(dimensionRow, dimensionCol, numTanks, sizeTanks);
+        finishMapInitialisation(dimensionRow, dimensionCol);
+    }
+
+    public Map getMap(){
+        return map;
     }
 
     public boolean revealTank(Coordinate coordinate) {
@@ -65,25 +71,46 @@ public class TankManager {
         } while (!emptySquare);
 
         List<Coordinate> tankPositions = new ArrayList<>();
-        tankPositions.set(0, nextSquare);
+        setOccupied(nextSquare);
+        tankPositions.add(nextSquare);
 
         for (int i = 1; i < sizeTanks; i++) {
             List<Coordinate> possiblePositions = new ArrayList<>();
-            possiblePositions.addAll(searchForAvailableSpot(nextSquare)); //TODO Add positions that didnt repeat!!!
+            possiblePositions.addAll(searchForAvailableSpot(dimensionRow, dimensionCol, nextSquare));
+            //TODO Add positions that didnt repeat!!!
 
             int index = random.nextInt(possiblePositions.size());
             nextSquare = possiblePositions.get(index);
-            
+
             setOccupied(nextSquare);
-            tankPositions.set(i, nextSquare);
+            tankPositions.add(nextSquare);
         }
 
         Tank newTank = new Tank(tankPositions);
         tetromino.add(newTank);
     }
 
-    private List<Coordinate> searchForAvailableSpot(Coordinate coordinate){
-        return new ArrayList<>(); //TODO
+    private List<Coordinate> searchForAvailableSpot(int dimensionRow, int dimensionCol, Coordinate coordinate){
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+        List<Coordinate> positions = new ArrayList<>();
+        Coordinate coor;
+
+        for(int i = row - 1; i <= row + 1; i++){
+            if(i < 0 || i >= dimensionRow){
+                continue;
+            }
+            for(int j = col - 1; j <= col + 1; j++){
+                if(j < 0 || j >= dimensionCol){
+                    continue;
+                }
+                coor = new Coordinate(i, j);
+                if(map.getSquare(coor).getIfEmpty()){
+                    positions.add(coor);
+                }
+            }
+        }
+        return positions;
     }
 
     private void setOccupied(Coordinate coordinate) {
@@ -92,7 +119,7 @@ public class TankManager {
         map.setSquare(coordinate, square);
     }
 
-    private void finishInitialisation(int dimensionRow, int dimensionCol){
+    private void finishMapInitialisation(int dimensionRow, int dimensionCol){
         for(int i = 0; i < dimensionRow; i++){
             for(int j = 0; j < dimensionCol; j++){
                 Coordinate coordinate = new Coordinate(i,j);

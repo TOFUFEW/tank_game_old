@@ -33,4 +33,13 @@ public class Square {
             return false;
         }
     }
+
+    @Override
+    public String toString(){
+        if(is_empty){
+            return " 0 ";
+        } else {
+            return " 1 ";
+        }
+    }
 }
