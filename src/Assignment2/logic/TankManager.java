@@ -1,6 +1,12 @@
-package Assignment2;
+package Assignment2.logic;
 
+import Assignment2.core.Coordinate;
+import Assignment2.core.Square;
+import Assignment2.core.Tank;
+import Assignment2.core.Coordinate;
+import Assignment2.core.Map;
 import java.util.List;
+
 
 /**
  * Created by constantin on 21/06/16.

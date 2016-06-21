@@ -1,4 +1,4 @@
-package Assignment2;
+package Assignment2.core;
 
 /**
  * Created by Daniel on 2016-06-18.
