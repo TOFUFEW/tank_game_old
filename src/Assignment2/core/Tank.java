@@ -1,4 +1,6 @@
-package Assignment2;
+package Assignment2.core;
+
+import Assignment2.core.Coordinate;
 
 import java.util.List;
 

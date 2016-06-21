@@ -1,4 +1,4 @@
-package Assignment2;
+package Assignment2.core;
 
 /**
  * Created by constantin on 18/06/16.
@@ -14,9 +14,9 @@ public class Coordinate {
         this.col = (int) point.charAt(1) - FIRST_NUMBER;
     }
 
-    public Coordinate(char row , int col){
-        this.row = row - FIRST_LETTER;
-        this.col = col - 1;
+    public Coordinate(int row , int col){
+        this.row = row;
+        this.col = col;
     }
 
     public int getCol(){

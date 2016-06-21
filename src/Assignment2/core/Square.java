@@ -1,4 +1,4 @@
-package Assignment2;
+package Assignment2.core;
 
 /**
  * Created by Daniel on 2016-06-18.
@@ -31,6 +31,15 @@ public class Square {
             return true;
         } else {
             return false;
+        }
+    }
+
+    @Override
+    public String toString(){
+        if(is_empty){
+            return " 0 ";
+        } else {
+            return " 1 ";
         }
     }
 }

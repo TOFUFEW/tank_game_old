@@ -41,4 +41,13 @@ public class TestCoordinate {
         return validCol && validRow;
     }
 
+
+    //FOR UI:
+    /*
+    if (square.getFog()){
+        revealTank(row, col);
+    } else {
+        System.out.println("Repeat your choice, you already hit this spot");
+    }
+    * */
 }
