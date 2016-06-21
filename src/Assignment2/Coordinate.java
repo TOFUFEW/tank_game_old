@@ -19,11 +19,6 @@ public class Coordinate {
         this.col = col - 1;
     }
 
-    public boolean equals(Coordinate coor){
-        return this.col == coor.getCol()
-                && this.row == coor.getRow();
-    }
-
     public int getCol(){
         return col;
     }
@@ -32,7 +27,7 @@ public class Coordinate {
         return row;
     }
 
-    /*@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             //The same address
@@ -51,7 +46,7 @@ public class Coordinate {
         int result = col;
         result = 31 * result + row;
         return result;
-    }*/
+    }
 
     @Override
     public String toString(){
