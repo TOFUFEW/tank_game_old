@@ -34,6 +34,7 @@ public class Square {
         }
     }
 
+
     @Override
     public String toString(){
         if(is_empty){

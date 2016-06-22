@@ -17,8 +17,10 @@ public class TankManager {
     private Map map;
     private List<Tank> tetromino;
 
-    public TankManager(int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
-        map = new Map(dimensionRow, dimensionCol);
+    public TankManager(Map map, int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
+        //map = new Map(dimensionRow, dimensionCol);
+        this.map = map;
+
         tetromino = new ArrayList<>();
         generateTetrominos(dimensionRow, dimensionCol, numTanks, sizeTanks);
         finishMapInitialisation(dimensionRow, dimensionCol);
@@ -33,7 +35,7 @@ public class TankManager {
         if (square.attack()) {
             //Cell is opened now and there is a tank
             damageTank(coordinate);
-            map.setSquare(coordinate, square);
+//          map.setSquare(coordinate, square);
             return true;
         }
         return false;
@@ -45,6 +47,15 @@ public class TankManager {
             total += tank.getDamage();
         }
         return total;
+    }
+    public int getNumTanks(){
+        int count = 0;
+        for(Tank tank : tetromino){
+            if(tank.is_dead()){
+                count++;
+            }
+        }
+        return tetromino.size() - count;
     }
 
     //----------------------------

@@ -18,6 +18,12 @@ public class Map {
         this.dimensionRow = dimensionRow;
         this.dimensionCol = dimensionCol;
     }
+    public int get_dimensionRow(){
+        return dimensionRow;
+    }
+    public int get_dimensionCol(){
+        return dimensionCol;
+    }
 
     public Square getSquare(Coordinate coordinate) {
         int row = coordinate.getRow();
