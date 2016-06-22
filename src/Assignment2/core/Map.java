@@ -37,6 +37,12 @@ public class Map {
         map[row][col] = square;
     }
 
+    public void printMap(){
+        for (int i = 0; i < dimensionCol; i++){
+            System.out.printf("");
+        }
+    }
+
     @Override
     public String toString(){
         String result = "Z    1  2  3  4  5  6  7  8  9  10\n";

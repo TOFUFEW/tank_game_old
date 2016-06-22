@@ -26,9 +26,6 @@ public class TankManager {
         finishMapInitialisation(dimensionRow, dimensionCol);
     }
 
-    public Map getMap(){
-        return map;
-    }
 
     public boolean revealTank(Coordinate coordinate) {
         Square square = map.getSquare(coordinate);
