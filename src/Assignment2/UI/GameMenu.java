@@ -1,4 +1,4 @@
-package Assignment2.core;
+package Assignment2.UI;
 
 import java.util.Scanner;
 

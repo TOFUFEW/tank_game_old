@@ -2,9 +2,7 @@ package Assignment2.logic;
 
 import Assignment2.core.Coordinate;
 import Assignment2.core.Fortress;
-import Assignment2.core.GameMenu;
-import Assignment2.core.Map;
-import Assignment2.core.GameMenu;
+import Assignment2.UI.GameMenu;
 
 import java.util.Scanner;
 
@@ -14,16 +12,22 @@ import java.util.Scanner;
 public class GameEngine {
     private static final int DEFAULT_NUM_TANKS = 5;
     private static final int DEFAULT_TANK_SIZE = 4;
-    private static final int DEFAULT_MAP_SIZE = 10;
+    private static final int DEFAULT_MAP_WIDTH = 10;
+    private static final int DEFAULT_MAP_HEIGHT = 10;
 
-    private Fortress fortress = new Fortress();
-    private GameMenu gameMenu = new GameMenu();
-    private Map map = new Map(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE);
-    private TankManager tankManager = new TankManager(map, map.get_dimensionRow(), map.get_dimensionRow(), DEFAULT_NUM_TANKS, DEFAULT_TANK_SIZE);
+    private Fortress fortress;
+    private GameMenu gameMenu;
+    private TankManager tankManager;
+    public GameEngine(){
+        fortress = new Fortress();
+        gameMenu = new GameMenu();
+        tankManager  = new TankManager(
+                DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT,
+                DEFAULT_NUM_TANKS, DEFAULT_TANK_SIZE);
+    }
 
 
-
-    public void GameEngine(){
+    public void run(){
         boolean game_on = true;
         while (game_on) {
             map.printMap();
@@ -93,9 +97,6 @@ public class GameEngine {
     private int getEnemyAttackPower(){
         return tankManager.getTotalDamage();
     }
-
-
-
 }
 
 

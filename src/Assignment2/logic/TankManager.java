@@ -17,10 +17,8 @@ public class TankManager {
     private Map map;
     private List<Tank> tetromino;
 
-    public TankManager(Map map, int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
-        //map = new Map(dimensionRow, dimensionCol);
-        this.map = map;
-
+    public TankManager(int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
+        map = new Map(dimensionRow, dimensionCol);
         tetromino = new ArrayList<>();
         generateTetrominos(dimensionRow, dimensionCol, numTanks, sizeTanks);
         finishMapInitialisation(dimensionRow, dimensionCol);
