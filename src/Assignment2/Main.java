@@ -1,10 +1,10 @@
 package Assignment2;
 
-import Assignment2.UI.GameEngine;
+import Assignment2.UI.GameMenu;
 
 public class Main {
     public static void main(String[] args) {
-        GameEngine game = new GameEngine();
-        game.run();
+        GameMenu game = new GameMenu();
+        game.start();
     }
 }
