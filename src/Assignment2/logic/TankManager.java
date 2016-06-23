@@ -19,8 +19,8 @@ public class TankManager {
     private static int dimensionRow;
     private static int dimensionCol;
 
-    public TankManager(int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
-        map = new Map(dimensionRow, dimensionCol);
+    public TankManager(Map map, int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
+        this.map = map;
         tetromino = new ArrayList<>();
         this.dimensionRow = dimensionRow;
         this.dimensionCol = dimensionCol;
@@ -62,13 +62,6 @@ public class TankManager {
         return getNumTanks() <= 0;
     }
 
-    public Map getMap(){
-        return map;
-    }
-
-    //----------------------------
-    // ----- Private methods -----
-    //----------------------------
 
     private void generateTetrominos(int numTanks, int sizeTanks) {
         for(int i = 0; i < numTanks; i++){

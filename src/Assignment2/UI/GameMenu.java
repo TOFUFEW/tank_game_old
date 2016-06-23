@@ -20,11 +20,13 @@ public class GameMenu {
         return getChoice();
     }
 
+
     public String getInput(int mapNumRow, int mapNumCol){
         boolean invalidInput = true;
         String target = null;
 
         while (invalidInput) {
+            scanner = new Scanner(System.in);
             System.out.println("Which Location to attack?");
             target = scanner.nextLine();
             boolean inputOK = verifyInput(target, mapNumRow, mapNumCol);
@@ -33,7 +35,7 @@ public class GameMenu {
                 invalidInput = false;
             } else {
                 System.out.printf(
-                        "Invalid coordinates please enter a coordinate between A1 and %c%d",
+                        "Invalid coordinates please enter a coordinate between A1 and %c%d\n",
                         'A' + mapNumRow - 1, mapNumCol);
             }
         }
@@ -41,15 +43,15 @@ public class GameMenu {
     }
 
     private void printMenu(){
-        System.out.println("Game Menu:");
+        System.out.println("\nGame Menu:");
         System.out.println("************************\n");
-        System.out.println("Choose Option:\n\n");
+        System.out.println("Choose Option:\n");
         System.out.println("1. Attack the enemy! ");
         System.out.println("2. Display remaining health");
         System.out.println("3. Display number of enemies remaining");
         System.out.println("4. Display enemy attack power");
         System.out.println("5. Surrender");
-        System.out.println("6. Quit Game\n\n");
+        System.out.println("6. Quit Game\n");
 
     }
 

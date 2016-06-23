@@ -37,10 +37,13 @@ public class Square {
 
     @Override
     public String toString(){
+        if(fog){
+            return "\t~";
+        }
         if(is_empty){
-            return " . ";
+            return "\t.";
         } else {
-            return " X ";
+            return "\tX";
         }
     }
 }

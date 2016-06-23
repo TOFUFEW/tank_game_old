@@ -25,10 +25,11 @@ public class GameEngine {
     public GameEngine(){
         fortress = new Fortress();
         gameMenu = new GameMenu();
+        map = new Map(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
         tankManager  = new TankManager(
+                map,
                 DEFAULT_MAP_ROW, DEFAULT_MAP_COL,
                 DEFAULT_NUM_TANKS, DEFAULT_TANK_SIZE);
-        this.map = tankManager.getMap();
     }
 
 
@@ -58,13 +59,20 @@ public class GameEngine {
         while (true) {
             switch (gameMenu.main()) {
                 case 1:
-                    String input = gameMenu.getInput(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
-                    Coordinate coords = new Coordinate(input);
-                    boolean hasFog = map.getSquare(coords).getFog();
-
-                    if (!hasFog) {
-                        System.out.println("Repeat your choice, you already hit this spot");
-                        continue;
+                    boolean invalid = true;
+                    Coordinate coords = null;
+                    while (invalid) {
+                        String input = gameMenu.getInput(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
+                        coords = new Coordinate(input);
+                        boolean hasFog = map.getSquare(coords).getFog();
+                        if (!map.getSquare(coords).getIfEmpty()){
+                            System.out.println("\nHit!!");
+                        }
+                        if (!hasFog) {
+                            System.out.println("Choose another location, you already hit this spot");
+                            continue;
+                        }
+                        invalid = false;
                     }
 
                     attack(coords);
@@ -80,6 +88,7 @@ public class GameEngine {
                     break; //Repeats selection
                 case 5:
                     System.out.println("You surrender!!! DEFEAT...");
+                    displayMap();
                     return false;
                 case 6:
                     System.out.println("Good bye...");
@@ -116,7 +125,7 @@ public class GameEngine {
     }
 
     private void displayMap() {
-        //TODO map -----> toString displays maps that are 10x10 only and with reviled squares
+        //TODO map -----> toString displays maps that are 10x10 <--done only and with reviled squares
         System.out.println(map);
     }
 }
