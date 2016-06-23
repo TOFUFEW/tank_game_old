@@ -24,13 +24,12 @@ public class TankManager {
         finishMapInitialisation(dimensionRow, dimensionCol);
     }
 
-
     public boolean revealTank(Coordinate coordinate) {
         Square square = map.getSquare(coordinate);
         if (square.attack()) {
             //Cell is opened now and there is a tank
             damageTank(coordinate);
-//          map.setSquare(coordinate, square);
+            map.setSquare(coordinate, square);
             return true;
         }
         return false;
@@ -51,6 +50,14 @@ public class TankManager {
             }
         }
         return tetromino.size() - count;
+    }
+
+    public boolean noTanks(){
+        return getNumTanks() <= 0;
+    }
+
+    public Map getMap(){
+        return map;
     }
 
     //----------------------------
@@ -83,7 +90,6 @@ public class TankManager {
         for (int i = 1; i < sizeTanks; i++) {
             List<Coordinate> possiblePositions = new ArrayList<>();
             possiblePositions.addAll(searchForAvailableSpot(dimensionRow, dimensionCol, nextSquare));
-            //TODO Add positions that didnt repeat!!!
 
             int index = random.nextInt(possiblePositions.size());
             nextSquare = possiblePositions.get(index);
