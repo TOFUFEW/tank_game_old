@@ -34,7 +34,11 @@ public class Map {
 
     @Override
     public String toString(){
-        String result = "\t\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\n";
+        String result = "\t";
+        for (int i = 0; i < dimensionCol; i++){
+            result = result + "\t" + (1+i);
+        }
+        result = result + "\n";
         String horizontal = "";
         for(int i = 0; i < dimensionRow; i++){
             for(int j = 0; j < dimensionCol; j++){
