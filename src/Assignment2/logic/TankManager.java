@@ -62,13 +62,6 @@ public class TankManager {
         return getNumTanks() <= 0;
     }
 
-    public Map getMap(){
-        return map;
-    }
-
-    //----------------------------
-    // ----- Private methods -----
-    //----------------------------
 
     private void generateTetrominos(int numTanks, int sizeTanks) {
         for(int i = 0; i < numTanks; i++){

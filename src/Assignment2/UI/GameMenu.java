@@ -26,7 +26,7 @@ public class GameMenu {
         String target = null;
 
         while (invalidInput) {
-            Scanner scanner = new Scanner(System.in);
+            scanner = new Scanner(System.in);
             System.out.println("Which Location to attack?");
             target = scanner.nextLine();
             boolean inputOK = verifyInput(target, mapNumRow, mapNumCol);
@@ -51,7 +51,7 @@ public class GameMenu {
         System.out.println("3. Display number of enemies remaining");
         System.out.println("4. Display enemy attack power");
         System.out.println("5. Surrender");
-        System.out.println("6. Quit Game\n\n");
+        System.out.println("6. Quit Game\n");
 
     }
 

@@ -65,7 +65,9 @@ public class GameEngine {
                         String input = gameMenu.getInput(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
                         coords = new Coordinate(input);
                         boolean hasFog = map.getSquare(coords).getFog();
-
+                        if (!map.getSquare(coords).getIfEmpty()){
+                            System.out.println("\nHit!!");
+                        }
                         if (!hasFog) {
                             System.out.println("Choose another location, you already hit this spot");
                             continue;
@@ -86,6 +88,7 @@ public class GameEngine {
                     break; //Repeats selection
                 case 5:
                     System.out.println("You surrender!!! DEFEAT...");
+                    displayMap();
                     return false;
                 case 6:
                     System.out.println("Good bye...");
@@ -122,7 +125,7 @@ public class GameEngine {
     }
 
     private void displayMap() {
-        //TODO map -----> toString displays maps that are 10x10 only and with reviled squares
+        //TODO map -----> toString displays maps that are 10x10 <--done only and with reviled squares
         System.out.println(map);
     }
 }
