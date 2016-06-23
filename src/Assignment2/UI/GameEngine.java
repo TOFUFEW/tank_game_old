@@ -18,100 +18,48 @@ public class GameEngine {
     private static final int DEFAULT_MAP_COL = 10;
 
     private Fortress fortress;
-    private GameMenu gameMenu;
     private TankManager tankManager;
     private Map map;
+    private int numRow;
+    private int numCol;
 
-    public GameEngine(){
+    public GameEngine() {
         fortress = new Fortress();
-        gameMenu = new GameMenu();
         map = new Map(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
-        tankManager  = new TankManager(
+        tankManager = new TankManager(
                 map,
                 DEFAULT_MAP_ROW, DEFAULT_MAP_COL,
                 DEFAULT_NUM_TANKS, DEFAULT_TANK_SIZE);
     }
 
-
-    public void run(){
-        displayMap();
-
-        while (makeSelection()) {
-            displayMap();
-
-            if (tankManager.noTanks()){
-                System.out.println("YOU WIN!!");
-                break;
-            }
-
-            enemyAttack();
-            System.out.printf("Enemies attacked for %d damage! \n", getEnemyAttackPower());
-            displayHealth();
-
-            if(fortress.isRuined()){
-                System.out.println("Game Over! You Lost!");
-                break;
-            }
-        }
+    public GameEngine(int numRow, int numCol, int numTanks, int tankSize) {
+        this.numRow = numRow;
+        this.numCol = numCol;
+        fortress = new Fortress();
+        map = new Map(numRow, numCol);
+        tankManager = new TankManager(
+                map,
+                numRow, numCol,
+                numTanks, tankSize);
     }
 
-    private boolean makeSelection(){
-        while (true) {
-            switch (gameMenu.main()) {
-                case 1:
-                    boolean invalid = true;
-                    Coordinate coords = null;
-                    while (invalid) {
-                        String input = gameMenu.getInput(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
-                        coords = new Coordinate(input);
-                        boolean hasFog = map.getSquare(coords).getFog();
-                        if (!map.getSquare(coords).getIfEmpty()){
-                            System.out.println("\nHit!!");
-                        }
-                        if (!hasFog) {
-                            System.out.println("Choose another location, you already hit this spot");
-                            continue;
-                        }
-                        invalid = false;
-                    }
-
-                    attack(coords);
-                    return true;
-                case 2:
-                    displayHealth();
-                    break; //Repeats selection
-                case 3:
-                    numEnemiesRemaining();
-                    break; //Repeats selection
-                case 4:
-                    System.out.printf("Enemies now do %d damage per turn \n", getEnemyAttackPower());
-                    break; //Repeats selection
-                case 5:
-                    System.out.println("You surrender!!! DEFEAT...");
-                    displayMap();
-                    return false;
-                case 6:
-                    System.out.println("Good bye...");
-                    return false;
-                default:
-                    assert true;
-            }
-        }
+    public Map getMap(){
+        return map;
     }
 
-    private void enemyAttack(){
-        fortress.decHealth(tankManager.getTotalDamage());
+    public int getNumRow(){
+        return DEFAULT_MAP_ROW;
     }
 
-    private void displayHealth(){
-        System.out.printf("Health remaining: %d \n", fortress.getHealth());
+    public int getNumCol(){
+        return DEFAULT_MAP_COL;
     }
 
-    private void numEnemiesRemaining(){
-        System.out.printf("Number of enemies remaining: %d \n", tankManager.getNumTanks());
+    public boolean isClearSquare(Coordinate coordinate) {
+        return map.getSquare(coordinate).getFog();
     }
 
-    private boolean attack(Coordinate coords){
+    public boolean attack(Coordinate coords){
         if(!map.getSquare(coords).attack()){
             tankManager.revealTank(coords);
             return true;
@@ -120,14 +68,30 @@ public class GameEngine {
         }
     }
 
-    private int getEnemyAttackPower(){
+    public void enemyAttack() {
+        fortress.decHealth(tankManager.getTotalDamage());
+    }
+
+    public int getRemainingHealth() {
+        return fortress.getHealth();
+    }
+
+    public int numEnemiesRemaining(){
+        return tankManager.getNumTanks();
+    }
+
+    public int getEnemyAttackPower(){
         return tankManager.getTotalDamage();
     }
 
-    private void displayMap() {
-        //TODO map -----> toString displays maps that are 10x10 <--done only and with reviled squares
-        System.out.println(map);
+    public boolean lostGame() {
+        return fortress.isRuined();
     }
+
+    public boolean wonGame() {
+        return tankManager.noTanks();
+    }
+
 }
 
 

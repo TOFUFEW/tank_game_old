@@ -1,6 +1,8 @@
 package Assignment2.UI;
 
 import Assignment2.core.Coordinate;
+import Assignment2.core.Map;
+import Assignment2.core.Square;
 import java.util.Scanner;
 
 /**
@@ -9,37 +11,112 @@ import java.util.Scanner;
 public class GameMenu {
     private static final int MIN_MENU_CHOICE = 1;
     private static final int MAX_MENU_CHOICE = 6;
+    private static final char FIRST_LETTER = 'A';
     private Scanner scanner;
+    private GameEngine logic;
 
     public GameMenu(){
         this.scanner = new Scanner(System.in);
+        logic = new GameEngine();
     }
 
-    public int main(){
-        printMenu();
-        return getChoice();
-    }
+    public void start(){
+        displayMap();
 
+        while (makeMenuSelection()) {
+            displayMap();
 
-    public String getInput(int mapNumRow, int mapNumCol){
-        boolean invalidInput = true;
-        String target = null;
+            if (logic.wonGame()){
+                System.out.println("YOU WIN!!");
+                break;
+            }
 
-        while (invalidInput) {
-            scanner = new Scanner(System.in);
-            System.out.println("Which Location to attack?");
-            target = scanner.nextLine();
-            boolean inputOK = verifyInput(target, mapNumRow, mapNumCol);
+            logic.enemyAttack();
+            System.out.printf("Enemies attacked for %d damage! \n", logic.getEnemyAttackPower());
+            System.out.printf("Health remaining: %d \n", logic.getRemainingHealth());
 
-            if(inputOK) {
-                invalidInput = false;
-            } else {
-                System.out.printf(
-                        "Invalid coordinates please enter a coordinate between A1 and %c%d\n",
-                        'A' + mapNumRow - 1, mapNumCol);
+            if(logic.lostGame()){
+                System.out.println("Game Over! You Lost!");
+                displayClearedMap();
+                break;
             }
         }
-        return target;
+    }
+
+    private void displayMap() {
+        showMap(false);
+    }
+
+    private void displayClearedMap(){
+        showMap(true);
+    }
+    
+    private void showMap(boolean clearedMap){
+        Map map = logic.getMap();
+        int numRow = logic.getNumRow();
+        int numCol = logic.getNumCol();
+
+        String result = " ";
+        for(int i = 1; i <= numCol; i++){
+            result += " " + i + " ";
+        }
+        result += "\n";
+        String horizontal = "";
+
+        for(int i = 0; i < numRow; i++){
+            for(int j = 0; j < numCol; j++){
+                Square square = map.getSquare(new Coordinate(i, j));
+                if (clearedMap){
+                    square.attack();
+                }
+                horizontal += " " + square + " ";
+            }
+            result += (char)(FIRST_LETTER + i) + horizontal + "\n";
+            horizontal = "";
+        }
+
+        System.out.println(result + "\n");
+    }
+
+    private boolean makeMenuSelection(){
+        while (true) {
+            printMenu();
+            switch (getChoice()) {
+                case 1:
+                    boolean invalid = true;
+                    Coordinate coords = null;
+                    while (invalid) {
+                        String input = getInput(logic.getNumRow(), logic.getNumCol());
+                        coords = new Coordinate(input);
+
+                        if (!logic.isClearSquare(coords)) {
+                            System.out.println("Choose another location, you already hit this spot");
+                            continue;
+                        }
+                        invalid = false;
+                    }
+
+                    logic.attack(coords);
+                    return true;
+                case 2:
+                    System.out.printf("Health remaining: %d \n", logic.getRemainingHealth());
+                    break; //Repeats selection
+                case 3:
+                    System.out.printf("Number of enemies remaining: %d \n", logic.numEnemiesRemaining());
+                    break; //Repeats selection
+                case 4:
+                    System.out.printf("Enemies now do %d damage per turn \n", logic.getEnemyAttackPower());
+                    break; //Repeats selection
+                case 5:
+                    System.out.println("You surrender!!! DEFEAT...");
+                    return false;
+                case 6:
+                    System.out.println("Good bye...");
+                    return false;
+                default:
+                    assert true;
+            }
+        }
     }
 
     private void printMenu(){
@@ -57,9 +134,16 @@ public class GameMenu {
 
     private int getChoice(){
         boolean invalidInput = true;
-        int choice = 0;
+        String choiceStr;
+        int choice = 1;
         while (invalidInput) {
-            choice = scanner.nextInt();
+            choiceStr = scanner.nextLine();
+            try {
+                choice = Integer.parseInt(choiceStr);
+            } catch (Exception e){
+                System.out.println("Only integers!");
+                continue;
+            }
             if(choice < MIN_MENU_CHOICE || choice > MAX_MENU_CHOICE){
                 System.out.printf(
                         "Invalid choice, please select a choice between %d and %d%n",
@@ -69,6 +153,27 @@ public class GameMenu {
             }
         }
         return choice;
+    }
+
+    private String getInput(int mapNumRow, int mapNumCol){
+        boolean invalidInput = true;
+        String target = null;
+
+        while (invalidInput) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Which Location to attack?");
+            target = scanner.nextLine();
+            boolean inputOK = verifyInput(target, mapNumRow, mapNumCol);
+
+            if(inputOK) {
+                invalidInput = false;
+            } else {
+                System.out.printf(
+                        "Invalid coordinates please enter a coordinate between A1 and %c%d\n",
+                        'A' + mapNumRow - 1, mapNumCol);
+            }
+        }
+        return target;
     }
 
     private boolean verifyInput(String input, int mapNumRow, int mapNumCol){
