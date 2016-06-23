@@ -1,6 +1,8 @@
 package Assignment2.UI;
 
 import Assignment2.core.Coordinate;
+import Assignment2.core.Map;
+import Assignment2.core.Square;
 import java.util.Scanner;
 
 /**
@@ -9,6 +11,7 @@ import java.util.Scanner;
 public class GameMenu {
     private static final int MIN_MENU_CHOICE = 1;
     private static final int MAX_MENU_CHOICE = 6;
+    private static final char FIRST_LETTER = 'A';
     private Scanner scanner;
     private GameEngine logic;
 
@@ -40,12 +43,39 @@ public class GameMenu {
         }
     }
 
-    private void displayMap(){
-
+    private void displayMap() {
+        showMap(false);
     }
 
     private void displayClearedMap(){
+        showMap(true);
+    }
 
+    private void showMap(boolean clearedMap){
+        Map map = logic.getMap();
+        int numRow = logic.getNumRow();
+        int numCol = logic.getNumCol();
+
+        String result = " ";
+        for(int i = 1; i <= numCol; i++){
+            result += " " + i + " ";
+        }
+        result += "\n";
+        String horizontal = "";
+
+        for(int i = 0; i < numRow; i++){
+            for(int j = 0; j < numCol; j++){
+                Square square = map.getSquare(new Coordinate(i, j));
+                if (clearedMap){
+                    square.attack();
+                }
+                horizontal += " " + square + " ";
+            }
+            result += (char)(FIRST_LETTER + i) + horizontal + "\n";
+            horizontal = "";
+        }
+
+        System.out.println(result + "\n");
     }
 
     private boolean makeMenuSelection(){
@@ -104,9 +134,16 @@ public class GameMenu {
 
     private int getChoice(){
         boolean invalidInput = true;
-        int choice = 0;
+        String choiceStr;
+        int choice = 1;
         while (invalidInput) {
-            choice = scanner.nextInt();
+            choiceStr = scanner.nextLine();
+            try {
+                choice = Integer.parseInt(choiceStr);
+            } catch (Exception e){
+                System.out.println("Only integers!");
+                continue;
+            }
             if(choice < MIN_MENU_CHOICE || choice > MAX_MENU_CHOICE){
                 System.out.printf(
                         "Invalid choice, please select a choice between %d and %d%n",
