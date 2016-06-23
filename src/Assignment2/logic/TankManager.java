@@ -19,8 +19,8 @@ public class TankManager {
     private static int dimensionRow;
     private static int dimensionCol;
 
-    public TankManager(int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
-        map = new Map(dimensionRow, dimensionCol);
+    public TankManager(Map map, int dimensionRow, int dimensionCol, int numTanks, int sizeTanks){
+        this.map = map;
         tetromino = new ArrayList<>();
         this.dimensionRow = dimensionRow;
         this.dimensionCol = dimensionCol;

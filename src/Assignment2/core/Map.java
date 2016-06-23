@@ -31,15 +31,16 @@ public class Map {
         map[row][col] = square;
     }
 
+
     @Override
     public String toString(){
-        String result = "~~~~  1  2  3  4  5  6  7  8  9  10\n";
+        String result = "\t\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\n";
         String horizontal = "";
         for(int i = 0; i < dimensionRow; i++){
             for(int j = 0; j < dimensionCol; j++){
                 horizontal = horizontal + map[i][j];
             }
-            result = result + (char)('A' + i) + "  | " + horizontal + "\n";
+            result = result + (char)('A' + i) + "\t|" + horizontal + "\n";
             horizontal = "";
         }
         return result;

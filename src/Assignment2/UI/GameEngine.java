@@ -25,10 +25,11 @@ public class GameEngine {
     public GameEngine(){
         fortress = new Fortress();
         gameMenu = new GameMenu();
+        map = new Map(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
         tankManager  = new TankManager(
+                map,
                 DEFAULT_MAP_ROW, DEFAULT_MAP_COL,
                 DEFAULT_NUM_TANKS, DEFAULT_TANK_SIZE);
-        this.map = tankManager.getMap();
     }
 
 
@@ -58,13 +59,18 @@ public class GameEngine {
         while (true) {
             switch (gameMenu.main()) {
                 case 1:
-                    String input = gameMenu.getInput(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
-                    Coordinate coords = new Coordinate(input);
-                    boolean hasFog = map.getSquare(coords).getFog();
+                    boolean invalid = true;
+                    Coordinate coords = null;
+                    while (invalid) {
+                        String input = gameMenu.getInput(DEFAULT_MAP_ROW, DEFAULT_MAP_COL);
+                        coords = new Coordinate(input);
+                        boolean hasFog = map.getSquare(coords).getFog();
 
-                    if (!hasFog) {
-                        System.out.println("Repeat your choice, you already hit this spot");
-                        continue;
+                        if (!hasFog) {
+                            System.out.println("Choose another location, you already hit this spot");
+                            continue;
+                        }
+                        invalid = false;
                     }
 
                     attack(coords);
