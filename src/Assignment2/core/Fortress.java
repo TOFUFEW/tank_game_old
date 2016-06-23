@@ -16,7 +16,7 @@ public class Fortress {
         return health;
     }
 
-    public void getDamage(int damage){
+    public void decHealth(int damage){
         this.health -= damage;
     }
 

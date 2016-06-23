@@ -35,6 +35,9 @@ public class Tank {
         }
         return false;
     }
+    public boolean is_dead(){
+        return health == 0;
+    }
 
     public int getDamage(){
         return damage;
