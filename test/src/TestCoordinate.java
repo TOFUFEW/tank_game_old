@@ -23,7 +23,7 @@ public class TestCoordinate {
         Assert.assertEquals(verifyInput(validInput1, 10, 10), true);
 
 
-        String validInput2 = "C10";
+        String validInput2 = "H10";
         Assert.assertEquals(verifyInput(validInput2, 10, 10), true);
 
     }

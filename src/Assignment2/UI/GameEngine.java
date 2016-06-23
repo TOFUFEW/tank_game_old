@@ -116,6 +116,7 @@ public class GameEngine {
     }
 
     private void displayMap() {
+        //TODO map -----> toString displays maps that are 10x10 only and with reviled squares
         System.out.println(map);
     }
 }

@@ -38,9 +38,9 @@ public class Square {
     @Override
     public String toString(){
         if(is_empty){
-            return " 0 ";
+            return " . ";
         } else {
-            return " 1 ";
+            return " X ";
         }
     }
 }

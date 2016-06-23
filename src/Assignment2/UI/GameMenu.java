@@ -70,7 +70,7 @@ public class GameMenu {
     }
 
     private boolean verifyInput(String input, int mapNumRow, int mapNumCol){
-        if (input.length() > 3 || input.length() < 1){
+        if (input.length() != 2 && input.length() != 3){
             return false;
         }
         Coordinate coordinate = new Coordinate(input);
